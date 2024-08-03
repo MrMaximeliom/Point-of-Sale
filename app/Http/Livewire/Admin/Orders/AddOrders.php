@@ -11,6 +11,8 @@ use App\Models\Translation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Spatie\FlareClient\Flare;
+
 class AddOrders extends Component
 {
     public $services,$search_query,$order_id,$inputs = [],$selservices = [],$customer,$date,$delivery_date,$discount,$paid_amount,$payment_type;
@@ -291,7 +293,8 @@ class AddOrders extends Component
                 'status'    => 0,
                 'order_type'    => 1,
                 'created_by'    => Auth::user()->id,
-                'financial_year_id' => getFinancialYearId()
+                'financial_year_id' => getFinancialYearId(),
+                'is_fully_paid' => $this->paid_amount == $this->total ? 1 : 0
             ]);
             foreach($this->selservices as $key => $value)
             {

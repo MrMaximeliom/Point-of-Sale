@@ -22,7 +22,8 @@ class Order extends Model
         'status',
         'order_type',
         'created_by',
-        'financial_year_id'
+        'financial_year_id',
+        'is_fully_paid'
     ];
 
       /* user relation */

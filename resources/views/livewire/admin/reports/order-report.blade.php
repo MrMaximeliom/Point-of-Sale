@@ -73,7 +73,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="row align-items-center px-4 mb-3">
+                <div class="row align-items-center px-4 mb-3 ">
                     <div class="col">
                         <span class="text-sm mb-0 fw-500">{{$lang->data['total_orders'] ?? 'Total Orders'}}:</span>
                         <span class="text-sm text-dark ms-2 fw-600 mb-0">{{count($orders)}}</span>

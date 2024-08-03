@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Livewire\Admin\Reports;
 use App\Models\Translation;
+use PDF;
 use Livewire\Component;
 class DailyReport extends Component
 {
-    public $today, $new_order, $delivered_orders, $total_payment, $total_expense, $total_sales,$lang;
+    public $from_date, $total_orders, $delivered_orders, $total_payment, $total_expense, $total_sales,$lang;
     /* render the page */
     public function render()
     {
@@ -12,7 +13,8 @@ class DailyReport extends Component
     }
     /* processed before render */
     public function mount() {
-        $this->today =\Carbon\Carbon::today()->toDateString();
+        $this->from_date =\Carbon\Carbon::today()->toDateString();
+       
         if(session()->has('selected_language'))
         {
             $this->lang = Translation::where('id',session()->get('selected_language'))->first();
@@ -23,20 +25,29 @@ class DailyReport extends Component
         $this->report();
     }
     /*processed on update of the element */
-    public function updated($name,$value) {
-        /* any updated on $today model */
-        if(($name="today") && ($value!=""))
-         {
-             $this->today = $value;
-        }
+  public function updated($name,$value) {
+
         $this->report();
     }
     /* report section */ 
     public function report(){
-             $this->new_order = \App\Models\Order::whereDate('order_date',$this->today)->count();
-             $this->delivered_orders = \App\Models\Order::whereDate('order_date',$this->today)->where('status',3)->count();
-             $this->total_payment = \App\Models\Payment::whereDate('payment_date',$this->today)->sum('received_amount');
-             $this->total_expense = \App\Models\Expense::whereDate('expense_date',$this->today)->sum('expense_amount');
-             $this->total_sales = \App\Models\Order::whereDate('order_date',$this->today)->where('status',3)->sum('total');
+             
+             $this->total_orders = \App\Models\Order::whereDate('order_date',$this->from_date)->count();
+             $this->delivered_orders = \App\Models\Order::whereDate('order_date',$this->from_date)->where('status',3)->count();
+             $this->total_payment = \App\Models\Payment::whereDate('payment_date',$this->from_date)->sum('received_amount');
+             $this->total_expense = \App\Models\Expense::whereDate('expense_date',$this->from_date)->sum('expense_amount');
+             $this->total_sales = \App\Models\Order::whereDate('order_date',$this->from_date)->where('is_fully_paid',1)->sum('total');
+    }
+        /* download report */
+    public function downloadFile()
+    {
+        $from_date =\Carbon\Carbon::today()->toDateString();
+        $total_orders = \App\Models\Order::whereDate('order_date',$this->from_date)->count();
+        $delivered_orders = \App\Models\Order::whereDate('order_date',$this->from_date)->where('status',3)->count();
+        $total_payment = \App\Models\Payment::whereDate('payment_date',$this->from_date)->sum('received_amount');
+        $total_expenses = \App\Models\Expense::whereDate('expense_date',$this->from_date)->sum('expense_amount');
+        $total_sales = \App\Models\Order::whereDate('order_date',$this->from_date)->where('is_fully_paid',1)->sum('total');
+        $pdfContent = PDF::loadView('livewire.admin.reports.download-report.daily-report', compact('from_date','total_orders','delivered_orders','total_payment','total_expenses','total_sales'))->output();
+        return response()->streamDownload(fn () => print($pdfContent), "DailyOrderReport_from_" . $from_date . ".pdf");
     }
 }

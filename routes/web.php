@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin','middleware' => ['store','installed']], functi
     Route::get('sales/{from_date}/{to_date}', \App\Http\Livewire\Admin\Reports\PrintReport\SalesReport::class);
     Route::get('tax/{from_date}/{to_date}/{category}', \App\Http\Livewire\Admin\Reports\PrintReport\TaxReport::class);
     Route::get('order/{from_date}/{to_date}/{status}', \App\Http\Livewire\Admin\Reports\PrintReport\OrderReport::class);
+    Route::get('daily-order/{from_date}', \App\Http\Livewire\Admin\Reports\PrintReport\DailyReport::class);
     });
     /* download reports */
     Route::group(['prefix' => 'download-report/','middleware' => 'admin'], function () {
@@ -69,6 +70,7 @@ Route::group(['prefix' => 'admin','middleware' => ['store','installed']], functi
     Route::get('sales/{from_date}/{to_date}', \App\Http\Livewire\Admin\Reports\DownloadReport\SalesReport::class);
     Route::get('tax/{from_date}/{to_date}/{category}', \App\Http\Livewire\Admin\Reports\DownloadReport\TaxReport::class);
     Route::get('order/{from_date}/{to_date}/{status}', \App\Http\Livewire\Admin\Reports\DownloadReport\OrderReport::class);
+    Route::get('daily-order/', \App\Http\Livewire\Admin\Reports\DownloadReport\DailyReport::class);
     });    
     });
 });

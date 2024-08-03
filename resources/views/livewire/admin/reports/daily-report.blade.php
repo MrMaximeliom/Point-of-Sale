@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label>{{$lang->data['date'] ?? 'Date'}}</label>
-                        <input type="date" class="form-control" wire:model="today">
+                        <input type="date" class="form-control" wire:model="from_date">
                     </div>
                 </div>
             </div>
@@ -31,14 +31,14 @@
                                     <p class="text-sm px-3 mb-0">{{$lang->data['orders'] ?? 'Orders'}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-sm font-weight-bold text-warning mb-0">{{$new_order}}</p>
+                                    <p class="text-sm font-weight-bold text-warning mb-0">{{$total_orders}}</p>
                                 </td>
                                 <td>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="text-sm px-3 mb-0">{{$lang->data['no_of_orders_delivered'] ?? 'No. of Orders Delivered'}}</p>
+                                    <p class="text-sm px-3 mb-0">{{$lang->data['delivered_orders'] ?? 'No. of Orders Delivered'}}</p>
                                 </td>
                                 <td>
                                     <p class="text-sm font-weight-bold text-primary mb-0">{{$delivered_orders}}</p>
@@ -48,10 +48,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="text-sm px-3 mb-0">{{$lang->data['total_sales'] ?? 'Total Sales'}}</p>
+                                    <p class="text-sm px-3 mb-0">{{$lang->data['total_sales'] ?? 'Total sales for fully paid orders'}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-sm font-weight-bold text-success mb-0">{{getCurrency()}}{{number_format($total_sales,2)}}</p>
+                                    <p class="text-sm font-weight-bold text-success mb-0">{{getCurrency()}}&nbsp;{{number_format($total_sales,2)}}</p>
                                 </td>
                                 <td>
                                 </td>
@@ -79,6 +79,15 @@
                         </tbody>
                     </table>
                 </div>
+                                <div class="row justify-content-end px-4 mb-3 ">
+
+                <div class="col-auto">
+                        <button type="button" wire:click="downloadFile()" class="btn btn-success me-2 mb-0">{{$lang->data['download_report'] ?? 'Download Report'}}</button>
+                            <a href="{{url('admin/reports/print-report/daily-order/'.$from_date)}}" target="_blank">                  
+                            <button type="submit" class="btn btn-warning mb-0">{{$lang->data['print_report'] ?? 'Print Report'}}</button>
+                            </a>
+                    </div>
+                                </div>
             </div>
         </div>
     </div>
