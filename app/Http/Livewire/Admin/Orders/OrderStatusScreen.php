@@ -6,7 +6,7 @@ use Livewire\Component;
 use Auth;
 class OrderStatusScreen extends Component
 {
-    public $orders,$pending_orders,$processing_orders,$ready_orders,$lang;
+    public $orders,$pending_orders,$processing_orders,$delivered_orders,$ready_orders,$lang;
     /* render the page */
     public function render()
     {
@@ -16,10 +16,12 @@ class OrderStatusScreen extends Component
         $this->pending_orders = Order::where('status',0)->latest()->get();
         $this->processing_orders = Order::where('status',1)->latest()->get();
         $this->ready_orders = Order::where('status',2)->latest()->get();
+        $this->delivered_orders = Order::where('status',3)->latest()->get();
         } else {
             $this->pending_orders = Order::where('created_by',Auth::user()->id)->where('status',0)->latest()->get();
             $this->processing_orders = Order::where('created_by',Auth::user()->id)->where('status',1)->latest()->get();
             $this->ready_orders = Order::where('created_by',Auth::user()->id)->where('status',2)->latest()->get();
+            $this->delivered_orders = Order::where('created_by',Auth::user()->id)->where('status',3)->latest()->get();
         }
         return view('livewire.admin.orders.order-status-screen');
     }
@@ -40,10 +42,14 @@ class OrderStatusScreen extends Component
         $this->pending_orders = Order::where('status',0)->latest()->get();
         $this->processing_orders = Order::where('status',1)->latest()->get();
         $this->ready_orders = Order::where('status',2)->latest()->get();
+        $this->delivered_orders = Order::where('status',3)->latest()->get();
+
         } else {
             $this->pending_orders = Order::where('created_by',Auth::user()->id)->where('status',0)->latest()->get();
             $this->processing_orders = Order::where('created_by',Auth::user()->id)->where('status',1)->latest()->get();
             $this->ready_orders = Order::where('created_by',Auth::user()->id)->where('status',2)->latest()->get();
+            $this->delivered_orders = Order::where('created_by',Auth::user()->id)->where('status',3)->latest()->get();
+
         }
     }
     /* change the order status */
@@ -66,6 +72,11 @@ class OrderStatusScreen extends Component
                 $orderz->status = 0;
                 $orderz->save();
                 $message = sendOrderStatusChangeSMS($orderz->id,3);
+                break;
+            case 'delivered':
+                $orderz->status = 3;
+                $orderz->save();
+                $message = sendOrderStatusChangeSMS($orderz->id,4);
                 break;
         }
 

@@ -61,7 +61,7 @@
                                     <p class="text-sm px-3 mb-0">{{$lang->data['total_payment'] ?? 'Total Payment'}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-sm font-weight-bold text-info mb-0">{{getCurrency()}}{{number_format($total_payment,2)}}</p>
+                                    <p class="text-sm font-weight-bold text-info mb-0">{{getCurrency()}}&nbsp;{{number_format($total_payment,2)}}</p>
                                 </td>
                                 <td>
                                 </td>
@@ -71,7 +71,7 @@
                                     <p class="text-sm px-3 mb-0">{{$lang->data['total_expense'] ?? 'Total Expense'}}</p>
                                 </td>
                                 <td>
-                                    <p class="text-sm font-weight-bold text-danger mb-0">{{getCurrency()}}{{number_format($total_expense,2)}}</p>
+                                    <p class="text-sm font-weight-bold text-danger mb-0">{{getCurrency()}}&nbsp;{{number_format($total_expense,2)}}</p>
                                 </td>
                                 <td>
                                 </td>

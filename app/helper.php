@@ -163,6 +163,8 @@ function getOrderStatusWithColorKan($status)
             return 'scrum-task-processing';
         case 2:
             return 'scrum-task-ready';
+        case 3:
+            return 'scrum-task-delivered';
     }
 }
 /* get priner type */

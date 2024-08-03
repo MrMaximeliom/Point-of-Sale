@@ -1,3 +1,9 @@
+:root{
+--scrum-task-processing:#faae42;    
+--scrum-task-ready-to-deliver: #4CAF50;  /* Emerald Green */
+--scrum-task-delivered: #6495ED;
+--scrum-task-pending:#8392ab;   
+}
 .graph {
     max-height: 275px;
     max-width: 275px;
@@ -254,11 +260,15 @@
     padding: 20px;
 }
 
-.scrum-board-processing {
+.scrum-board-processing,.scrum-board-ready {
     flex: 1;
     padding: 20px;
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
+}
+
+.status-delivered{
+    color:var(--scrum-task-delivered);
 }
 
 
@@ -296,6 +306,17 @@
     padding: 10px;
     border: .5px solid #2dce89;
     border-left: 5px solid #2dce89;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background-color: #fff;
+    cursor: all-scroll;
+}
+.scrum-task-delivered {
+    position: relative;
+    display: block;
+    padding: 10px;
+    border: .5px solid var(--scrum-task-delivered);
+    border-left: 5px solid var(--scrum-task-delivered);
     margin-bottom: 10px;
     border-radius: 15px;
     background-color: #fff;

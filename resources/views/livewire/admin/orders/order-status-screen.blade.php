@@ -138,6 +138,48 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="scrum-board delivered">
+                            <h5 class="text-uppercase status-delivered">
+                                {{ $lang->data['delivred'] ?? 'Delivred' }}</h5>
+                            <div class="scrum-board-column" id="delivered">
+                                @foreach ($delivered_orders as $item)
+                                    <div class="{{ getOrderStatusWithColorKan($item->status) }} overflow"
+                                        id="{{ $item->id }}">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <div>
+                                                <span
+                                                    class="fw-600 ms-2 text-sm text-dark">{{ $item->customer_name ?? ($lang->data['walk_in_customer'] ?? 'Walk In Customer') }}</span>
+                                                <div class="ms-2 mb-0">
+                                                    <span
+                                                        class="text-xs">{{ $lang->data['delivery_date'] ?? 'Delivery Date' }}:</span>
+                                                    <span
+                                                        class="text-xs fw-600 ms-2">{{ \Carbon\Carbon::parse($item->delivery_date)->format('d/m/Y') }}</span>
+                                                </div>
+                                            </div>
+                                            <div><span
+                                                    class="fw-600 text-sm text-dark me-2">{{ $item->order_number }}</span>
+                                            </div>
+                                        </div>
+                                        @php
+                                            $services = \App\Models\OrderDetails::where('order_id', $item->id)
+                                                ->limit(4)
+                                                ->get();
+                                        @endphp
+                                        <div class="pt-1 mb-0">
+                                            @foreach ($services as $row)
+                                                @php
+                                                    $service = \App\Models\Service::where('id', $row->service_id)->first();
+                                                @endphp
+                                                <a class="avatar avatar-sm ms-2 p-1 bg-light">
+                                                    <img src="{{ asset('assets/img/service-icons/' . $service->icon) }}">
+                                                </a>
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,7 +189,7 @@
         <script>
              "use strict";
             var drake = dragula([document.querySelector('#ready'), document.querySelector('#processing'), document
-                .querySelector('#pending')
+                .querySelector('#pending'),document.querySelector('#delivered')
             ]);
             drake.on("drop", function(el, target, source, sibling) {
 
