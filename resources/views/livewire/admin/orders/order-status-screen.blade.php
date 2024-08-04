@@ -9,6 +9,18 @@
             </a>
         </div>
     </div>
+    <div class="custom-card p-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>{{$lang->data['start_date'] ?? 'Start Date'}}</label>
+                        <input type="date" class="form-control" wire:model="from_date">
+                    </div>
+                    <div class="col-md-4">
+                        <label>{{$lang->data['end_date'] ?? 'End Date'}}</label>
+                        <input type="date" class="form-control" wire:model="to_date">
+                    </div>
+                </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">

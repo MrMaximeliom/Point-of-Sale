@@ -4,6 +4,18 @@
 --scrum-task-delivered: #6495ED;
 --scrum-task-pending:#8392ab;   
 }
+.custom-card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, .125);
+  border-radius: 50px 20px;
+  margin-bottom: 20px;
+}
 .graph {
     max-height: 275px;
     max-width: 275px;
